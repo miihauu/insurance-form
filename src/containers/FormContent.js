@@ -132,7 +132,7 @@ const FormContent = ({
       localStorage.setItem('carBrand', values.carBrand);
       localStorage.setItem('carModel', values.carModel);
     }
-  }, [values.carModel]);
+  }, [values.fuelType]);
 
   useEffect(() => {
     if (localStorage) {
