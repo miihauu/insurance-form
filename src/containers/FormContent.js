@@ -128,17 +128,15 @@ const FormContent = ({
   }, [values.carModel]);
 
   useEffect(() => {
-    if (values.carBrand && values.carModel) {
+    if (values.carBrand) {
       localStorage.setItem('carBrand', values.carBrand);
-      localStorage.setItem('carModel', values.carModel);
     }
-  }, [values.fuelType]);
+  }, [values.carBrand]);
 
   useEffect(() => {
     if (localStorage) {
       setValues({
         carBrand: localStorage.getItem('carBrand'),
-        carModel: localStorage.getItem('carModel'),
       });
     }
   }, [localStorage]);
