@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import 'unfetch/polyfill';
 import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/styles';
 import CarBrand from '../components/CarBrand';
