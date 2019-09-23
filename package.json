@@ -27,7 +27,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://github.com/miihauu/insurance-form",
+  "homepage": "https://miihauu.github.io/insurance-form/",
   "eslintConfig": {
     "extends": "react-app"
   },

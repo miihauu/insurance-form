@@ -132,7 +132,7 @@ const FormContent = ({
       localStorage.setItem('carBrand', values.carBrand);
       localStorage.setItem('carModel', values.carModel);
     }
-  }, [values.carBrand, values.carModel]);
+  }, [values.carModel]);
 
   useEffect(() => {
     if (localStorage) {
@@ -141,7 +141,7 @@ const FormContent = ({
         carModel: localStorage.getItem('carModel'),
       });
     }
-  }, []);
+  }, [localStorage]);
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
