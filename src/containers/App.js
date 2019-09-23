@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { API_KEY, API_URL } from '../API_DATA/api_data';
+import { API_KEY, API_URL, urlCTA } from '../API_DATA/api_data';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -35,7 +35,11 @@ function App() {
       <CssBaseline />
       <Grid container className={classes.root}>
         <Header headerStyle={classes.header} />
-        <FormContent API_URL={API_URL} API_KEY={API_KEY} />
+        <FormContent
+          API_URL={API_URL}
+          API_KEY={API_KEY}
+          urlCTA={urlCTA}
+        />
       </Grid>
     </React.Fragment>
   );

@@ -24,6 +24,7 @@ const ConfirmButton = ({
   carBrand,
   carModel,
   buttonText,
+  URL,
 }) => {
   const classes = useStyles();
 
@@ -33,7 +34,7 @@ const ConfirmButton = ({
         variant="contained"
         className={classes.button}
         disabled={isOpen ? false : true}
-        href={`https://www.mfind.pl/ubezpieczenie-oc-ac/kalkulator-oc-ac?make_name=${carBrand}&model_name=${carModel}`}
+        href={`${URL}?make_name=${carBrand}&model_name=${carModel}`}
       >
         {buttonText}
         <ArrowForwardOutlinedIcon />

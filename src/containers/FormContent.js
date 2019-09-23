@@ -49,6 +49,7 @@ const FormContent = ({
   loadingCarFuelType,
   API_KEY,
   API_URL,
+  urlCTA,
 }) => {
   const classes = useStyles();
   useEffect(() => {
@@ -181,6 +182,7 @@ const FormContent = ({
           isOpen={values.carModel && values.fuelType}
           carBrand={values.carBrand}
           carModel={values.carModel}
+          URL={urlCTA}
           buttonText={'OBLICZ SKŁADKĘ'}
         />
       </Grid>
