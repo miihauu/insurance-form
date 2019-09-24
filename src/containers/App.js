@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import FormContent from './FormContent';
+import InsuranceForm from './InsuranceForm';
 
 import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/styles';
@@ -37,7 +37,7 @@ function App() {
       <CssBaseline />
       <Grid container className={classes.root}>
         <Header headerStyle={classes.header} />
-        <FormContent textFieldColor={textFieldColor} />
+        <InsuranceForm textFieldColor={textFieldColor} />
       </Grid>
     </React.Fragment>
   );

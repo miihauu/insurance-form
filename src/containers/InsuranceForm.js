@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/styles';
 import CarBrand from '../components/CarBrand';
@@ -30,7 +31,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const FormContent = ({
+const InsuranceForm = ({
   getCarBrandsBegin,
   getCarBrandsSucceed,
   getCarBrandsFailed,
@@ -238,4 +239,11 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(FormContent);
+)(InsuranceForm);
+
+InsuranceForm.propTypes = {
+  textFieldColor: PropTypes.shape({
+    mainColor: PropTypes.string,
+    disabledColor: PropTypes.string,
+  }),
+};
