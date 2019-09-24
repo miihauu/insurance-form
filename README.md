@@ -1,7 +1,5 @@
 ## Insurance-form
 
-Project made for recruitment purposes. 
-
 **Technologies used:**
 - React & Redux
 - Redux-thunk
