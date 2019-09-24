@@ -7,12 +7,12 @@ const useStyles = makeStyles(() => ({
   textfield: {
     width: '100%',
   },
-  input: {
-    backgroundColor: '#eeeeee',
+  input: color => ({
+    backgroundColor: color.mainColor,
     '&.Mui-disabled': {
-      backgroundColor: '#fafafa',
+      backgroundColor: color.disabledColor,
     },
-  },
+  }),
 }));
 
 const CarFuelType = ({
@@ -21,8 +21,9 @@ const CarFuelType = ({
   selectedFuelType,
   isOpen,
   isLoading,
+  color,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles(color);
 
   return (
     <React.Fragment>

@@ -6,6 +6,7 @@ import CarBrand from '../components/CarBrand';
 import CarModel from '../components/CarModel';
 import CarFuelType from '../components/CarFuelType';
 import ConfirmButton from '../components/ConfirmButton';
+import { API_KEY, API_URL, urlCTA } from '../API_DATA/api_data';
 
 import {
   getCarBrandsBegin,
@@ -47,9 +48,7 @@ const FormContent = ({
   loadingBrands,
   loadingModels,
   loadingCarFuelType,
-  API_KEY,
-  API_URL,
-  urlCTA,
+  textFieldColor,
 }) => {
   const classes = useStyles();
   useEffect(() => {
@@ -153,6 +152,7 @@ const FormContent = ({
           carBrands={carBrands}
           selectedCarBrand={values.carBrand}
           isLoading={loadingBrands}
+          color={textFieldColor}
         />
         <CarModel
           handleChangeModel={handleChange}
@@ -160,6 +160,7 @@ const FormContent = ({
           selectedCarModel={values.carModel}
           isOpen={textFieldCarModelsOpen}
           isLoading={loadingModels}
+          color={textFieldColor}
         />
         <CarFuelType
           handleChangeFuelType={handleChange}
@@ -167,6 +168,7 @@ const FormContent = ({
           selectedFuelType={values.fuelType}
           isOpen={textFieldFuelTypeOpen}
           isLoading={loadingCarFuelType}
+          color={textFieldColor}
         />
         <SummaryForm
           carBrand={values.carBrand}

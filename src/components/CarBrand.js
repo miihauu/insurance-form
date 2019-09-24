@@ -7,12 +7,12 @@ const useStyles = makeStyles(() => ({
   textfield: {
     width: '100%',
   },
-  input: {
-    backgroundColor: '#eeeeee',
+  input: color => ({
+    backgroundColor: color.mainColor,
     '&.Mui-disabled': {
-      backgroundColor: '#fafafa',
+      backgroundColor: color.disabledColor,
     },
-  },
+  }),
 }));
 
 const CarBrand = ({
@@ -20,8 +20,9 @@ const CarBrand = ({
   carBrands,
   selectedCarBrand,
   isLoading,
+  color,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles(color);
 
   return (
     <React.Fragment>
@@ -30,7 +31,7 @@ const CarBrand = ({
         label="Marka"
         margin="normal"
         variant="filled"
-        className={classes.textfield}
+        className={`${classes.textfield} ${color}`}
         onChange={handleChangeBrand('carBrand')}
         value={selectedCarBrand}
         InputProps={{
