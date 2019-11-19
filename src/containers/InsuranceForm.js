@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import FormInput from '../components/FormInput';
+
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/styles';
-import CarBrand from '../components/CarBrand';
-import CarModel from '../components/CarModel';
-import CarFuelType from '../components/CarFuelType';
+import SummaryForm from '../components/SummaryForm';
 import ConfirmButton from '../components/ConfirmButton';
 import { API_KEY, API_URL, urlCTA } from '../API_DATA/api_data';
 
@@ -20,7 +20,6 @@ import {
   getCarFuelTypeSucceed,
   getCarFuelTypeFailed,
 } from '../store/actions/actions';
-import SummaryForm from '../components/SummaryForm';
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -148,29 +147,37 @@ const InsuranceForm = ({
   return (
     <React.Fragment>
       <Grid className={classes.content}>
-        <CarBrand
-          handleChangeBrand={handleChange}
+        <FormInput
+          handleChange={handleChange}
+          inputType={'carBrand'}
+          inputLabel={'Marka'}
+          listOfElements={carBrands}
           carBrands={carBrands}
-          selectedCarBrand={values.carBrand}
+          selectedValue={values.carBrand}
           isLoading={loadingBrands}
           color={textFieldColor}
         />
-        <CarModel
-          handleChangeModel={handleChange}
-          carModels={carModels}
-          selectedCarModel={values.carModel}
-          isOpen={textFieldCarModelsOpen}
+        <FormInput
+          handleChange={handleChange}
+          inputType={'carModel'}
+          inputLabel={'Model'}
+          listOfElements={carModels}
+          selectedValue={values.carModel}
           isLoading={loadingModels}
           color={textFieldColor}
+          isDisabled={!textFieldCarModelsOpen}
         />
-        <CarFuelType
-          handleChangeFuelType={handleChange}
-          fuelTypes={fuelTypes}
-          selectedFuelType={values.fuelType}
-          isOpen={textFieldFuelTypeOpen}
+        <FormInput
+          handleChange={handleChange}
+          inputType={'fuelType'}
+          inputLabel={'Paliwo'}
+          listOfElements={fuelTypes}
+          selectedValue={values.fuelType}
           isLoading={loadingCarFuelType}
           color={textFieldColor}
+          isDisabled={!textFieldFuelTypeOpen}
         />
+
         <SummaryForm
           carBrand={values.carBrand}
           carModel={values.carModel}
