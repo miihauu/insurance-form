@@ -21,7 +21,6 @@ const FormInput = ({
   inputLabel,
   listOfElements,
   selectedValue,
-  isLoading,
   isDisabled,
   color,
 }) => {
