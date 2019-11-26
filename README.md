@@ -1,3 +1,9 @@
-Insurance-form
+## Insurance-form
 
-app live: https://miihauu.github.io/insurance-form/
+**Technologies used:**
+- React & Redux
+- Redux-thunk
+- React Hooks
+- Material-UI
+
+You can check it live here: https://miihauu.github.io/insurance-form/
