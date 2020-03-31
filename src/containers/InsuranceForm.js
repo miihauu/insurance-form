@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/styles';
 import ConfirmButton from '../components/ConfirmButton';
 import { API_KEY, API_URL, urlCTA } from '../API_DATA/api_data';
+import { handleInput } from '../store/actions/actions';
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -16,28 +17,18 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const InsuranceForm = ({ brands, models, fuelTypes }) => {
+const InsuranceForm = ({ brands, models, fuelTypes, handleInputs, brand, model, fuelType }) => {
   const classes = useStyles();
   useEffect(() => {}, []);
 
-  const [values, setValues] = useState({
-    brand: null,
-    model: null,
-    fuelType: null
-  });
-
-  const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
-  };
-
-  const { brand, model, fuelType } = values;
+  const handleChange = name => event => handleInputs(name, event.target.value);
 
   return (
     <>
       <Grid className={classes.content}>
         <FormInput
           handleChange={handleChange}
-          inputType="carBrand"
+          inputType="brand"
           inputLabel="Marka"
           listOfElements={brands}
           carBrands={brands}
@@ -45,7 +36,7 @@ const InsuranceForm = ({ brands, models, fuelTypes }) => {
         />
         <FormInput
           handleChange={handleChange}
-          inputType="carModel"
+          inputType="model"
           inputLabel="Model"
           listOfElements={models}
           selectedValue={model}
@@ -59,29 +50,25 @@ const InsuranceForm = ({ brands, models, fuelTypes }) => {
           selectedValue={fuelType}
           isDisabled={!models.length}
         />
-        <ConfirmButton
-          isOpen={model && fuelType}
-          carBrand={brand}
-          carModel={model}
-          URL={urlCTA}
-          buttonText="OBLICZ SKŁADKĘ"
-        />
+        <ConfirmButton isOpen={model && fuelType} carBrand={brand} carModel={model} buttonText="OBLICZ SKŁADKĘ" />
       </Grid>
     </>
   );
 };
 
-const mapStateToProps = ({ cars }) => {
-  return {
-    brands: cars.brands,
-    models: cars.models,
-    fuelTypes: cars.fuelType,
-    loading: cars.loading
-  };
-};
+const mapStateToProps = ({ cars, cars: { car } }) => ({
+  brand: car.brand,
+  model: car.model,
+  fuelType: car.fuelType,
+  brands: cars.brands,
+  models: cars.models,
+  fuelTypes: cars.fuelType,
+  loading: cars.loading
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
+const mapDispatchToProps = dispatch => ({
+  handleInputs: payload => dispatch(handleInput(payload))
+  /*
     getCarBrandsBegin: () => dispatch(getCarBrandsBegin()),
     getCarBrandsSucceed: brands => dispatch(getCarBrandsSucceed(brands)),
     getCarBrandsFailed: error => dispatch(getCarBrandsFailed(error)),
@@ -91,8 +78,8 @@ const mapDispatchToProps = dispatch => {
     getCarFuelTypeBegin: () => dispatch(getCarFuelTypeBegin()),
     getCarFuelTypeSucceed: fuelType => dispatch(getCarFuelTypeSucceed(fuelType)),
     getCarFuelTypeFailed: err => dispatch(getCarFuelTypeFailed(err))
-  };
-};
+    */
+});
 
 export default connect(
   mapStateToProps,

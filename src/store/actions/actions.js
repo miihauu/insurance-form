@@ -7,8 +7,16 @@ import {
   FETCH_MODELS_FAILED,
   FETCH_FUEL_TYPE_BEGIN,
   FETCH_FUEL_TYPE_SUCCEED,
-  FETCH_FUEL_TYPE_FAILED
+  FETCH_FUEL_TYPE_FAILED,
+  HANDLE_INPUT
 } from '../actionTypes';
+
+export const handleInput = payload => {
+  return {
+    type: HANDLE_INPUT,
+    payload
+  };
+};
 
 export const getCarBrandsBegin = () => {
   return {

@@ -1,4 +1,4 @@
-import { API_KEY, API_URL } from '../../API_DATA/api_data';
+import { API_KEY, API_URL } from '../API_DATA/api_data';
 import {
   getCarBrandsBegin,
   getCarBrandsSucceed,
@@ -9,7 +9,7 @@ import {
   getCarFuelTypeBegin,
   getCarFuelTypeSucceed,
   getCarFuelTypeFailed
-} from './actions';
+} from '../store/actions/actions';
 import { useEffect } from 'react';
 
 const getBrands = () => {
