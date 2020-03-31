@@ -1,9 +1,16 @@
 {
-    "extends": ["airbnb", "prettier", "react-hooks"],
+    "extends": ["airbnb", "prettier"],
     "plugins": ["prettier"],
     "rules": {
       "prettier/prettier": ["error"],
-      "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-      "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
+      "no-multi-spaces": "error",
+      "comma-dangle": ["error", "never"],
+      "max-len": ["error", 120, 2],
+      "arrow-parens": ["error", "as-needed"],
+      "eol-last": ["error", "always"],
+      "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1, "maxBOF": 0 }],
+      "react/jsx-one-expression-per-line": "on",
+      "react/jsx-fragments": 0,
+      "react/jsx-props-no-spreading": 0
     }
   }

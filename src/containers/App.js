@@ -14,22 +14,18 @@ const useStyles = makeStyles(() => ({
     padding: 0,
     paddingBottom: '20px',
     maxWidth: 370,
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto'
   },
 
   content: {
     flexGrow: 1,
     height: '60%',
     width: '100%',
-    marginTop: '20px',
-  },
+    marginTop: '20px'
+  }
 }));
 
 function App() {
-  const textFieldColor = {
-    mainColor: '#eeeeee',
-    disabledColor: '#fafafa',
-  };
   const classes = useStyles();
 
   return (
@@ -37,7 +33,7 @@ function App() {
       <CssBaseline />
       <Grid container className={classes.root}>
         <Header headerStyle={classes.header} />
-        <InsuranceForm textFieldColor={textFieldColor} />
+        <InsuranceForm />
       </Grid>
     </React.Fragment>
   );

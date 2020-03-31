@@ -1,74 +1,72 @@
+import * as types from '../actionTypes';
+
 const initialState = {
-  carBrands: [],
-  loadingBrands: false,
-  carModels: [],
-  loadingModels: false,
-  carModelsTextFieldEnabled: false,
-  carFuelType: [],
-  loadingCarFuelType: false,
-  carFuelTypeTextFieldEnabled: false,
+  brands: [],
+  models: [],
+  fuelType: [],
+  loading: false,
 };
 
-const carReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'FETCH_BRANDS_BEGIN':
+const carReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case types.FETCH_BRANDS_BEGIN:
       return {
         ...state,
-        loadingBrands: true,
+        loading: true,
         error: null,
       };
-    case 'FETCH_BRANDS_SUCCEED':
+    case types.FETCH_BRANDS_SUCCEED:
       return {
         ...state,
-        loadingBrands: false,
-        carBrands: action.payload.carBrands,
+        loading: false,
+        brands: payload.brands,
       };
-    case 'FETCH_BRANDS_FAILED':
+    case types.FETCH_BRANDS_FAILED:
       return {
         ...state,
-        loadingBrands: false,
-        error: action.payload.error,
-        carBrands: [],
+        loading: false,
+        error: payload.error,
+        brands: [],
       };
-    case 'FETCH_MODELS_BEGIN':
+    case types.FETCH_MODELS_BEGIN:
       return {
         ...state,
-        loadingModels: true,
+        loading: true,
         error: null,
       };
-    case 'FETCH_MODELS_SUCCEED':
+    case types.FETCH_MODELS_SUCCEED:
       return {
         ...state,
-        loadingModels: false,
+        loading: false,
         carModelsTextFieldEnabled: true,
-        carModels: action.payload.carModels,
+        models: payload.models,
       };
-    case 'FETCH_MODELS_FAILED':
+    case types.FETCH_MODELS_FAILED:
       return {
         ...state,
-        loadingModels: false,
-        error: action.payload.error,
-        carModels: [],
+        loading: false,
+        error: payload.error,
+        models: [],
       };
-    case 'FETCH_FUEL_TYPE_BEGIN':
+    case types.FETCH_FUEL_TYPE_BEGIN:
       return {
         ...state,
-        loadingCarFuelType: true,
+        loading: true,
         error: null,
       };
-    case 'FETCH_FUEL_TYPE_SUCCEED':
+    case types.FETCH_FUEL_TYPE_SUCCEED:
       return {
         ...state,
-        loadingCarFuelType: false,
+        loading: false,
         carFuelTypeTextFieldEnabled: true,
-        carFuelType: action.payload.fuelType,
+        fuelType: payload.fuelType,
       };
-    case 'FETCH_FUEL_TYPE_FAILED':
+    case types.FETCH_FUEL_TYPE_FAILED:
       return {
         ...state,
-        loadingCarFuelType: false,
-        error: action.payload.error,
-        carFuelType: [],
+        loading: false,
+        error: payload.error,
+        fuelType: [],
       };
     default:
       return state;

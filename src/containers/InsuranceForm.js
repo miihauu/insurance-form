@@ -2,255 +2,99 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import FormInput from '../components/FormInput';
 
-import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/styles';
-import SummaryForm from '../components/SummaryForm';
 import ConfirmButton from '../components/ConfirmButton';
 import { API_KEY, API_URL, urlCTA } from '../API_DATA/api_data';
-
-import {
-  getCarBrandsBegin,
-  getCarBrandsSucceed,
-  getCarBrandsFailed,
-  getCarModelsBegin,
-  getCarModelsSucceed,
-  getCarModelsFailed,
-  getCarFuelTypeBegin,
-  getCarFuelTypeSucceed,
-  getCarFuelTypeFailed,
-} from '../store/actions/actions';
 
 const useStyles = makeStyles(() => ({
   content: {
     flexGrow: 1,
     height: '60%',
     width: '100%',
-    marginTop: '20px',
-  },
+    marginTop: '20px'
+  }
 }));
 
-const InsuranceForm = ({
-  getCarBrandsBegin,
-  getCarBrandsSucceed,
-  getCarBrandsFailed,
-  getCarModelsBegin,
-  getCarModelsSucceed,
-  getCarModelsFailed,
-  getCarFuelTypeBegin,
-  getCarFuelTypeSucceed,
-  getCarFuelTypeFailed,
-  carBrands,
-  carModels,
-  fuelTypes,
-  textFieldCarModelsOpen,
-  textFieldFuelTypeOpen,
-  loadingBrands,
-  loadingModels,
-  loadingCarFuelType,
-  textFieldColor,
-}) => {
+const InsuranceForm = ({ brands, models, fuelTypes }) => {
   const classes = useStyles();
-  useEffect(() => {
-    getCarBrandsBegin();
-    fetch(`https://cors-anywhere.herokuapp.com/${API_URL}`, {
-      method: 'GET',
-      headers: new Headers({
-        Authorization: `Basic ${API_KEY}`,
-      }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        getCarBrandsSucceed(data);
-      })
-      .catch(error => {
-        getCarBrandsFailed(error);
-      });
-  }, []);
-
-  const getDataCarModels = carBrand => {
-    getCarModelsBegin();
-    fetch(
-      `https://cors-anywhere.herokuapp.com/${API_URL}/${carBrand}/models`,
-      {
-        method: 'GET',
-        headers: new Headers({
-          Authorization: `Basic ${API_KEY}`,
-        }),
-      },
-    )
-      .then(response => response.json())
-      .then(data => {
-        getCarModelsSucceed(data);
-      })
-      .catch(error => {
-        getCarModelsFailed(error);
-      });
-  };
-
-  const getDataFuelType = (carBrand, carModel) => {
-    getCarFuelTypeBegin();
-    fetch(
-      `https://cors-anywhere.herokuapp.com/${API_URL}/${carBrand}/models/${carModel}/fuels/`,
-      {
-        method: 'GET',
-        headers: new Headers({
-          Authorization: `Basic ${API_KEY}`,
-        }),
-      },
-    )
-      .then(response => response.json())
-      .then(data => {
-        getCarFuelTypeSucceed(data);
-      })
-      .catch(error => {
-        getCarFuelTypeFailed(error);
-      });
-  };
+  useEffect(() => {}, []);
 
   const [values, setValues] = useState({
-    carBrand: null,
-    carModel: null,
-    fuelType: null,
+    brand: null,
+    model: null,
+    fuelType: null
   });
-
-  useEffect(() => {
-    if (values.carBrand) {
-      getDataCarModels(values.carBrand);
-    }
-  }, [values.carBrand]);
-
-  useEffect(() => {
-    if (values.carBrand && values.carModel) {
-      getDataFuelType(values.carBrand, values.carModel);
-    }
-  }, [values.carModel]);
-
-  useEffect(() => {
-    if (values.carBrand) {
-      localStorage.setItem('carBrand', values.carBrand);
-    }
-  }, [values.carBrand]);
-
-  useEffect(() => {
-    if (localStorage) {
-      setValues({
-        carBrand: localStorage.getItem('carBrand'),
-      });
-    }
-  }, [localStorage]);
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
 
+  const { brand, model, fuelType } = values;
+
   return (
-    <React.Fragment>
+    <>
       <Grid className={classes.content}>
         <FormInput
           handleChange={handleChange}
-          inputType={'carBrand'}
-          inputLabel={'Marka'}
-          listOfElements={carBrands}
-          carBrands={carBrands}
-          selectedValue={values.carBrand}
-          isLoading={loadingBrands}
-          color={textFieldColor}
+          inputType="carBrand"
+          inputLabel="Marka"
+          listOfElements={brands}
+          carBrands={brands}
+          selectedValue={brand}
         />
         <FormInput
           handleChange={handleChange}
-          inputType={'carModel'}
-          inputLabel={'Model'}
-          listOfElements={carModels}
-          selectedValue={values.carModel}
-          isLoading={loadingModels}
-          color={textFieldColor}
-          isDisabled={!textFieldCarModelsOpen}
+          inputType="carModel"
+          inputLabel="Model"
+          listOfElements={models}
+          selectedValue={model}
+          isDisabled={!brands.length}
         />
         <FormInput
           handleChange={handleChange}
-          inputType={'fuelType'}
-          inputLabel={'Paliwo'}
+          inputType="fuelType"
+          inputLabel="Paliwo"
           listOfElements={fuelTypes}
-          selectedValue={values.fuelType}
-          isLoading={loadingCarFuelType}
-          color={textFieldColor}
-          isDisabled={!textFieldFuelTypeOpen}
-        />
-
-        <SummaryForm
-          carBrand={values.carBrand}
-          carModel={values.carModel}
-          fuelType={values.fuelType}
-          isOpen={
-            values.carBrand && values.carModel && values.fuelType
-          }
+          selectedValue={fuelType}
+          isDisabled={!models.length}
         />
         <ConfirmButton
-          isOpen={values.carModel && values.fuelType}
-          carBrand={values.carBrand}
-          carModel={values.carModel}
+          isOpen={model && fuelType}
+          carBrand={brand}
+          carModel={model}
           URL={urlCTA}
-          buttonText={'OBLICZ SKŁADKĘ'}
+          buttonText="OBLICZ SKŁADKĘ"
         />
       </Grid>
-    </React.Fragment>
+    </>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ cars }) => {
   return {
-    carBrands: state.cars.carBrands,
-    carModels: state.cars.carModels,
-    fuelTypes: state.cars.carFuelType,
-    textFieldCarModelsOpen: state.cars.carModelsTextFieldEnabled,
-    textFieldFuelTypeOpen: state.cars.carFuelTypeTextFieldEnabled,
-    loadingBrands: state.cars.loadingBrands,
-    loadingModels: state.cars.loadingModels,
-    loadingCarFuelType: state.cars.loadingCarFuelType,
+    brands: cars.brands,
+    models: cars.models,
+    fuelTypes: cars.fuelType,
+    loading: cars.loading
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCarBrandsBegin: () => {
-      dispatch(getCarBrandsBegin());
-    },
-    getCarBrandsSucceed: carBrands => {
-      dispatch(getCarBrandsSucceed(carBrands));
-    },
-    getCarBrandsFailed: err => {
-      dispatch(getCarBrandsFailed(err));
-    },
-    getCarModelsBegin: () => {
-      dispatch(getCarModelsBegin());
-    },
-    getCarModelsSucceed: carBrand => {
-      dispatch(getCarModelsSucceed(carBrand));
-    },
-    getCarModelsFailed: err => {
-      dispatch(getCarModelsFailed(err));
-    },
-    getCarFuelTypeBegin: () => {
-      dispatch(getCarFuelTypeBegin());
-    },
-    getCarFuelTypeSucceed: fuelType => {
-      dispatch(getCarFuelTypeSucceed(fuelType));
-    },
-    getCarFuelTypeFailed: err => {
-      dispatch(getCarFuelTypeFailed(err));
-    },
+    getCarBrandsBegin: () => dispatch(getCarBrandsBegin()),
+    getCarBrandsSucceed: brands => dispatch(getCarBrandsSucceed(brands)),
+    getCarBrandsFailed: error => dispatch(getCarBrandsFailed(error)),
+    getCarModelsBegin: () => dispatch(getCarModelsBegin()),
+    getCarModelsSucceed: carBrand => dispatch(getCarModelsSucceed(carBrand)),
+    getCarModelsFailed: error => dispatch(getCarModelsFailed(error)),
+    getCarFuelTypeBegin: () => dispatch(getCarFuelTypeBegin()),
+    getCarFuelTypeSucceed: fuelType => dispatch(getCarFuelTypeSucceed(fuelType)),
+    getCarFuelTypeFailed: err => dispatch(getCarFuelTypeFailed(err))
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(InsuranceForm);
-
-InsuranceForm.propTypes = {
-  textFieldColor: PropTypes.shape({
-    mainColor: PropTypes.string,
-    disabledColor: PropTypes.string,
-  }),
-};
