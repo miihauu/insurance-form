@@ -29,13 +29,13 @@ function App() {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
-      <Grid container className={classes.root}>
+      <Grid className={classes.root}>
         <Header headerStyle={classes.header} />
         <InsuranceForm />
       </Grid>
-    </React.Fragment>
+    </>
   );
 }
 

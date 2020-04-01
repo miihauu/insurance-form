@@ -1,58 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import FormInput from '../components/FormInput';
-
 import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/styles';
 import ConfirmButton from '../components/ConfirmButton';
-import { API_KEY, API_URL, urlCTA } from '../API_DATA/api_data';
-import { handleInput } from '../store/actions/actions';
+import { getBrandsAction, getFuelTypesAction, getModelsAction } from '../api/apiActions';
+import { HANDLE_BRAND, HANDLE_FUEL_TYPE, HANDLE_MODEL } from '../store/actionTypes';
+import BrandInput from '../components/BrandInput';
+import ModelInput from '../components/ModelInput';
+import FuelInput from '../components/FuelInput';
+import { content } from '../data/styles';
 
-const useStyles = makeStyles(() => ({
-  content: {
-    flexGrow: 1,
-    height: '60%',
-    width: '100%',
-    marginTop: '20px'
-  }
-}));
+const useStyles = makeStyles(() => content);
 
-const InsuranceForm = ({ brands, models, fuelTypes, handleInputs, brand, model, fuelType }) => {
+const InsuranceForm = ({
+  brands,
+  models,
+  fuelTypes,
+  handleBrand,
+  handleModel,
+  handleFuelType,
+  brand,
+  model,
+  fuelType,
+  getBrands,
+  getModels,
+  getFuelTypes
+}) => {
   const classes = useStyles();
-  useEffect(() => {}, []);
-
-  const handleChange = name => event => handleInputs(name, event.target.value);
+  useEffect(() => getBrands(), []);
+  useEffect(() => {
+    if (brands.length && brand) return getModels();
+  }, [brands.length]);
+  useEffect(() => {
+    if (brands.length && models.length && model) return getFuelTypes();
+  }, [models.length]);
 
   return (
-    <>
-      <Grid className={classes.content}>
-        <FormInput
-          handleChange={handleChange}
-          inputType="brand"
-          inputLabel="Marka"
-          listOfElements={brands}
-          carBrands={brands}
-          selectedValue={brand}
-        />
-        <FormInput
-          handleChange={handleChange}
-          inputType="model"
-          inputLabel="Model"
-          listOfElements={models}
-          selectedValue={model}
-          isDisabled={!brands.length}
-        />
-        <FormInput
-          handleChange={handleChange}
-          inputType="fuelType"
-          inputLabel="Paliwo"
-          listOfElements={fuelTypes}
-          selectedValue={fuelType}
-          isDisabled={!models.length}
-        />
-        <ConfirmButton isOpen={model && fuelType} carBrand={brand} carModel={model} buttonText="OBLICZ SKŁADKĘ" />
-      </Grid>
-    </>
+    <Grid className={classes.content}>
+      <BrandInput handleChange={handleBrand} label="Marka" options={brands} value={brand} />
+      <ModelInput handleChange={handleModel} label="Model" options={models} value={model} isDisabled={!brands.length} />
+      <FuelInput
+        handleChange={handleFuelType}
+        label="Paliwo"
+        options={fuelTypes}
+        value={fuelType}
+        isDisabled={!models.length}
+      />
+      <ConfirmButton isOpen={model && fuelType} carBrand={brand} carModel={model} buttonText="OBLICZ SKŁADKĘ" />
+    </Grid>
   );
 };
 
@@ -62,23 +57,17 @@ const mapStateToProps = ({ cars, cars: { car } }) => ({
   fuelType: car.fuelType,
   brands: cars.brands,
   models: cars.models,
-  fuelTypes: cars.fuelType,
+  fuelTypes: cars.fuelTypes,
   loading: cars.loading
 });
 
-const mapDispatchToProps = dispatch => ({
-  handleInputs: payload => dispatch(handleInput(payload))
-  /*
-    getCarBrandsBegin: () => dispatch(getCarBrandsBegin()),
-    getCarBrandsSucceed: brands => dispatch(getCarBrandsSucceed(brands)),
-    getCarBrandsFailed: error => dispatch(getCarBrandsFailed(error)),
-    getCarModelsBegin: () => dispatch(getCarModelsBegin()),
-    getCarModelsSucceed: carBrand => dispatch(getCarModelsSucceed(carBrand)),
-    getCarModelsFailed: error => dispatch(getCarModelsFailed(error)),
-    getCarFuelTypeBegin: () => dispatch(getCarFuelTypeBegin()),
-    getCarFuelTypeSucceed: fuelType => dispatch(getCarFuelTypeSucceed(fuelType)),
-    getCarFuelTypeFailed: err => dispatch(getCarFuelTypeFailed(err))
-    */
+const mapDispatchToProps = (dispatch, { brand, model }) => ({
+  handleBrand: payload => dispatch({ type: HANDLE_BRAND, payload }),
+  handleModel: payload => dispatch({ type: HANDLE_MODEL, payload }),
+  handleFuelType: payload => dispatch({ type: HANDLE_FUEL_TYPE, payload }),
+  getBrands: () => dispatch(getBrandsAction()),
+  getModels: () => dispatch(getModelsAction(brand)),
+  getFuelTypes: () => dispatch(getFuelTypesAction(brand, model))
 });
 
 export default connect(

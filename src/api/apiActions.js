@@ -10,10 +10,9 @@ import {
   getCarFuelTypeSucceed,
   getCarFuelTypeFailed
 } from '../store/actions/actions';
-import { useEffect } from 'react';
 
-const getBrands = () => {
-  getCarBrandsBegin();
+export const getBrandsAction = () => dispatch => {
+  dispatch(getCarBrandsBegin());
   fetch(`https://cors-anywhere.herokuapp.com/${API_URL}`, {
     method: 'GET',
     headers: new Headers({
@@ -21,12 +20,12 @@ const getBrands = () => {
     })
   })
     .then(response => response.json())
-    .then(data => getCarBrandsSucceed(data))
-    .catch(error => getCarBrandsFailed(error));
+    .then(data => dispatch(getCarBrandsSucceed(data)))
+    .catch(error => dispatch(getCarBrandsFailed(error)));
 };
 
-const getModels = carBrand => {
-  getCarModelsBegin();
+export const getModelsAction = brand => dispatch => {
+  dispatch(getCarModelsBegin());
   fetch(`https://cors-anywhere.herokuapp.com/${API_URL}/${brand}/models`, {
     method: 'GET',
     headers: new Headers({
@@ -34,12 +33,12 @@ const getModels = carBrand => {
     })
   })
     .then(response => response.json())
-    .then(data => getCarModelsSucceed(data))
-    .catch(error => getCarModelsFailed(error));
+    .then(data => dispatch(getCarModelsSucceed(data)))
+    .catch(error => dispatch(getCarModelsFailed(error)));
 };
 
-const getFuelTypes = (brand, model) => {
-  getCarFuelTypeBegin();
+export const getFuelTypesAction = (brand, model) => dispatch => {
+  dispatch(getCarFuelTypeBegin());
   fetch(`https://cors-anywhere.herokuapp.com/${API_URL}/${brand}/models/${model}/fuels/`, {
     method: 'GET',
     headers: new Headers({
@@ -47,18 +46,6 @@ const getFuelTypes = (brand, model) => {
     })
   })
     .then(response => response.json())
-    .then(data => getCarFuelTypeSucceed(data))
-    .catch(error => getCarFuelTypeFailed(error));
+    .then(data => dispatch(getCarFuelTypeSucceed(data)))
+    .catch(error => dispatch(getCarFuelTypeFailed(error)));
 };
-
-useEffect(() => {
-  if (brand) {
-    getDataCarModels(brand);
-  }
-}, [values.carBrand]);
-
-useEffect(() => {
-  if (brand && model) {
-    getDataFuelType(brand, model);
-  }
-}, [values.carModel]);

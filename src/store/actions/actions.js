@@ -7,16 +7,8 @@ import {
   FETCH_MODELS_FAILED,
   FETCH_FUEL_TYPE_BEGIN,
   FETCH_FUEL_TYPE_SUCCEED,
-  FETCH_FUEL_TYPE_FAILED,
-  HANDLE_INPUT
+  FETCH_FUEL_TYPE_FAILED
 } from '../actionTypes';
-
-export const handleInput = payload => {
-  return {
-    type: HANDLE_INPUT,
-    payload
-  };
-};
 
 export const getCarBrandsBegin = () => {
   return {
@@ -27,14 +19,14 @@ export const getCarBrandsBegin = () => {
 export const getCarBrandsSucceed = brands => {
   return {
     type: FETCH_BRANDS_SUCCEED,
-    payload: brands
+    payload: { brands }
   };
 };
 
 export const getCarBrandsFailed = error => {
   return {
     type: FETCH_BRANDS_FAILED,
-    payload: error
+    payload: { error }
   };
 };
 
@@ -47,14 +39,14 @@ export const getCarModelsBegin = () => {
 export const getCarModelsSucceed = models => {
   return {
     type: FETCH_MODELS_SUCCEED,
-    payload: models
+    payload: { models }
   };
 };
 
 export const getCarModelsFailed = error => {
   return {
     type: FETCH_MODELS_FAILED,
-    payload: error
+    payload: { error }
   };
 };
 
@@ -67,13 +59,13 @@ export const getCarFuelTypeBegin = () => {
 export const getCarFuelTypeSucceed = fuelType => {
   return {
     type: FETCH_FUEL_TYPE_SUCCEED,
-    payload: fuelType
+    payload: { fuelType }
   };
 };
 
 export const getCarFuelTypeFailed = error => {
   return {
     type: FETCH_FUEL_TYPE_FAILED,
-    payload: error
+    payload: { error }
   };
 };

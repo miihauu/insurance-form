@@ -2,25 +2,33 @@ import * as types from '../actionTypes';
 
 const initialState = {
   car: {
-    brand: null,
-    model: null,
-    fuelType: null
+    brand: '',
+    model: '',
+    fuelType: ''
   },
   brands: [],
   models: [],
-  fuelType: [],
+  fuelTypes: [],
   loading: false,
   error: null
 };
 
-const handleInputsState = (state, { field, value }) => ({ ...state, [field]: value });
-
 const reducers = (state = initialState, { type, payload }) => {
   switch (type) {
-    case types.HANDLE_INPUT:
+    case types.HANDLE_BRAND:
       return {
         ...state,
-        ...{ car: handleInputsState(state, payload) }
+        car: { brand: payload }
+      };
+    case types.HANDLE_MODEL:
+      return {
+        ...state,
+        car: { brand: payload }
+      };
+    case types.HANDLE_FUEL_TYPE:
+      return {
+        ...state,
+        car: { brand: payload }
       };
     case types.FETCH_BRANDS_BEGIN:
       return {
