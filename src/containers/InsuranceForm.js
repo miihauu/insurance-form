@@ -5,10 +5,9 @@ import { makeStyles } from '@material-ui/styles';
 import ConfirmButton from '../components/ConfirmButton';
 import { getBrandsAction, getFuelTypesAction, getModelsAction } from '../api/apiActions';
 import { HANDLE_BRAND, HANDLE_FUEL_TYPE, HANDLE_MODEL } from '../store/actionTypes';
-import BrandInput from '../components/BrandInput';
-import ModelInput from '../components/ModelInput';
-import FuelInput from '../components/FuelInput';
+import FormInput from '../components/FormInput';
 import { content } from '../data/styles';
+import { URL_CTA } from '../API_DATA/api_data';
 
 const useStyles = makeStyles(() => content);
 
@@ -27,26 +26,43 @@ const InsuranceForm = ({
   getFuelTypes
 }) => {
   const classes = useStyles();
+
   useEffect(() => getBrands(), []);
   useEffect(() => {
-    if (brands.length && brand) return getModels();
-  }, [brands.length]);
+    if (brand) return getModels(brand);
+  }, [brand]);
   useEffect(() => {
-    if (brands.length && models.length && model) return getFuelTypes();
-  }, [models.length]);
+    if (brand && model) return getFuelTypes(brand, model);
+  }, [model]);
+
+  const handleBrandChange = e => handleBrand(e.target.value);
+  const handleModelChange = e => handleModel(e.target.value);
+  const handleFuelTypeChange = e => handleFuelType(e.target.value);
 
   return (
     <Grid className={classes.content}>
-      <BrandInput handleChange={handleBrand} label="Marka" options={brands} value={brand} />
-      <ModelInput handleChange={handleModel} label="Model" options={models} value={model} isDisabled={!brands.length} />
-      <FuelInput
-        handleChange={handleFuelType}
+      <FormInput handleChange={handleBrandChange} label="Marka" options={brands} value={brand} name="make_name" />
+      <FormInput
+        handleChange={handleModelChange}
+        label="Model"
+        options={models}
+        value={model}
+        isDisabled={!models.length}
+        name="model_name"
+      />
+      <FormInput
+        handleChange={handleFuelTypeChange}
         label="Paliwo"
         options={fuelTypes}
         value={fuelType}
-        isDisabled={!models.length}
+        isDisabled={!fuelTypes.length}
+        name="fuel_name"
       />
-      <ConfirmButton isOpen={model && fuelType} carBrand={brand} carModel={model} buttonText="OBLICZ SKŁADKĘ" />
+      <ConfirmButton
+        isOpen={model && fuelType}
+        text="OBLICZ SKŁADKĘ"
+        cta={`${URL_CTA}?make_name=${brand}&model_name=${model}&fuel_name=${fuelType}`}
+      />
     </Grid>
   );
 };
@@ -61,13 +77,13 @@ const mapStateToProps = ({ cars, cars: { car } }) => ({
   loading: cars.loading
 });
 
-const mapDispatchToProps = (dispatch, { brand, model }) => ({
+const mapDispatchToProps = dispatch => ({
   handleBrand: payload => dispatch({ type: HANDLE_BRAND, payload }),
   handleModel: payload => dispatch({ type: HANDLE_MODEL, payload }),
   handleFuelType: payload => dispatch({ type: HANDLE_FUEL_TYPE, payload }),
   getBrands: () => dispatch(getBrandsAction()),
-  getModels: () => dispatch(getModelsAction(brand)),
-  getFuelTypes: () => dispatch(getFuelTypesAction(brand, model))
+  getModels: brand => dispatch(getModelsAction(brand)),
+  getFuelTypes: (brand, model) => dispatch(getFuelTypesAction(brand, model))
 });
 
 export default connect(

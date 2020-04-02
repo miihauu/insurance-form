@@ -37,6 +37,7 @@ export const getCarModelsBegin = () => {
 };
 
 export const getCarModelsSucceed = models => {
+  console.log(models);
   return {
     type: FETCH_MODELS_SUCCEED,
     payload: { models }
@@ -56,10 +57,10 @@ export const getCarFuelTypeBegin = () => {
   };
 };
 
-export const getCarFuelTypeSucceed = fuelType => {
+export const getCarFuelTypeSucceed = fuelTypes => {
   return {
     type: FETCH_FUEL_TYPE_SUCCEED,
-    payload: { fuelType }
+    payload: { fuelTypes }
   };
 };
 

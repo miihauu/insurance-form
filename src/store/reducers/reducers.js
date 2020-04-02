@@ -18,17 +18,17 @@ const reducers = (state = initialState, { type, payload }) => {
     case types.HANDLE_BRAND:
       return {
         ...state,
-        car: { brand: payload }
+        car: { ...state.car, brand: payload }
       };
     case types.HANDLE_MODEL:
       return {
         ...state,
-        car: { brand: payload }
+        car: { ...state.car, model: payload }
       };
     case types.HANDLE_FUEL_TYPE:
       return {
         ...state,
-        car: { brand: payload }
+        car: { ...state.car, fuelType: payload }
       };
     case types.FETCH_BRANDS_BEGIN:
       return {
@@ -57,7 +57,6 @@ const reducers = (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        carModelsTextFieldEnabled: true,
         models: payload.models
       };
     case types.FETCH_MODELS_FAILED:
@@ -76,8 +75,7 @@ const reducers = (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        carFuelTypeTextFieldEnabled: true,
-        fuelType: payload.fuelType
+        fuelTypes: payload.fuelTypes
       };
     case types.FETCH_FUEL_TYPE_FAILED:
       return {

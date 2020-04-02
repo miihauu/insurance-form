@@ -12,3 +12,20 @@ export const content = {
     marginTop: '20px'
   }
 };
+
+export const button = {
+  button: {
+    margin: '20px 0',
+    backgroundColor: '#ffcc00',
+    width: '100%',
+    borderRadius: '20px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingLeft: '1.5rem',
+    paddingRight: '1.5rem',
+    '&:hover': {
+      backgroundColor: '#f9a825',
+      borderColor: '#f9a825'
+    }
+  }
+};
