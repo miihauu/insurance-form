@@ -18,12 +18,22 @@ const reducers = (state = initialState, { type, payload }) => {
     case types.HANDLE_BRAND:
       return {
         ...state,
-        car: { ...state.car, brand: payload }
+        car: { ...state.car, brand: payload, model: '', fuelType: '' }
       };
     case types.HANDLE_MODEL:
       return {
         ...state,
-        car: { ...state.car, model: payload }
+        car: { ...state.car, model: payload, fuelType: '' }
+      };
+    case types.CLEAR_MODELS:
+      return {
+        ...state,
+        models: []
+      };
+    case types.CLEAR_FUEL_TYPES:
+      return {
+        ...state,
+        fuelTypes: []
       };
     case types.HANDLE_FUEL_TYPE:
       return {

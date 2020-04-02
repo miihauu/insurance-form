@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/styles';
 import ConfirmButton from '../components/ConfirmButton';
 import { getBrandsAction, getFuelTypesAction, getModelsAction } from '../api/apiActions';
-import { HANDLE_BRAND, HANDLE_FUEL_TYPE, HANDLE_MODEL } from '../store/actionTypes';
+import { HANDLE_BRAND, HANDLE_FUEL_TYPE, HANDLE_MODEL, CLEAR_MODELS, CLEAR_FUEL_TYPES } from '../store/actionTypes';
 import FormInput from '../components/FormInput';
 import { content } from '../data/styles';
 import { URL_CTA } from '../API_DATA/api_data';
@@ -41,7 +41,14 @@ const InsuranceForm = ({
 
   return (
     <Grid className={classes.content}>
-      <FormInput handleChange={handleBrandChange} label="Marka" options={brands} value={brand} name="make_name" />
+      <FormInput
+        handleChange={handleBrandChange}
+        label="Marka"
+        options={brands}
+        value={brand}
+        isDisabled={!brands.length}
+        name="make_name"
+      />
       <FormInput
         handleChange={handleModelChange}
         label="Model"
@@ -78,8 +85,15 @@ const mapStateToProps = ({ cars, cars: { car } }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleBrand: payload => dispatch({ type: HANDLE_BRAND, payload }),
-  handleModel: payload => dispatch({ type: HANDLE_MODEL, payload }),
+  handleBrand: payload => {
+    dispatch({ type: HANDLE_BRAND, payload });
+    dispatch({ type: CLEAR_MODELS });
+    dispatch({ type: CLEAR_FUEL_TYPES });
+  },
+  handleModel: payload => {
+    dispatch({ type: HANDLE_MODEL, payload });
+    dispatch({ type: CLEAR_FUEL_TYPES });
+  },
   handleFuelType: payload => dispatch({ type: HANDLE_FUEL_TYPE, payload }),
   getBrands: () => dispatch(getBrandsAction()),
   getModels: brand => dispatch(getModelsAction(brand)),

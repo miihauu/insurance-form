@@ -37,7 +37,6 @@ export const getCarModelsBegin = () => {
 };
 
 export const getCarModelsSucceed = models => {
-  console.log(models);
   return {
     type: FETCH_MODELS_SUCCEED,
     payload: { models }
