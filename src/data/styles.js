@@ -29,3 +29,18 @@ export const button = {
     }
   }
 };
+
+export const header = {
+  header: {
+    flexGrow: 1,
+    height: '230px',
+    padding: 0,
+    backgroundColor: '#f5f5f5',
+    borderRadius: '0 0 50% 50%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#0a2c48'
+  }
+};
